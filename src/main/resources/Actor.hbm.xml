@@ -1,0 +1,10 @@
+<hibernate-mapping package="sakilahibernate.domain">
+    <class name="Actor" table="actor">
+        <id name="actorId" column="actor_id">
+            <generator class="native"/>
+        </id>
+        <property name="firstName" column="first_name"/>
+        <property name="lastName" column="last_name"/>
+        <property name="lastUpdate" column="last_update"/>
+    </class>
+</hibernate-mapping>
