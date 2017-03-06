@@ -1,21 +1,22 @@
-package sakilahibernate.manager;
+package sakilahibernate.dao;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import sakilahibernate.domain.Actor;
 import sakilahibernate.util.HibernateUtil;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ActorManager {
+public class ActorDAO {
 
     public static void main(String[] args){
-        ActorManager am = new ActorManager();
+        ActorDAO am = new ActorDAO();
         System.out.println(am.getActorList().toString());
         HibernateUtil.getSessionFactory().close();
     }
 
-    private void createAndStoreActor(String firstName, String lastName) {
+    public void createAndStoreActor(String firstName, String lastName) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         Actor a = new Actor();
@@ -25,13 +26,27 @@ public class ActorManager {
         session.getTransaction().commit();
     }
 
-    private List<Actor> getActorList(){
+    public List<Actor> getActorList(){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Query q = session.createQuery("from Actor");
+        Query<Actor> q = session.createQuery("from Actor", Actor.class);
         List<Actor> l = q.list();
         session.getTransaction().commit();
         return l;
     }
 
+    public void save(Actor actor){
+    	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        session.save(actor);
+        session.getTransaction().commit();
+    }
+    
+    public void update(Actor actor){
+    	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        session.merge(actor);
+        session.getTransaction().commit();
+    }
+    
 }
