@@ -45,8 +45,22 @@ public class ActorDAO {
     public void update(Actor actor){
     	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        session.merge(actor);
+        session.update(actor);
         session.getTransaction().commit();
     }
     
+    public void delete(Actor actor){
+    	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        session.delete(actor);
+        session.getTransaction().commit();
+    }
+    
+    public void delete(Short id){
+    	Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Actor actor = session.get(Actor.class, id);
+        session.delete(actor);
+        session.getTransaction().commit();
+    }
 }
