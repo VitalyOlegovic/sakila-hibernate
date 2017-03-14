@@ -1,6 +1,7 @@
 package sakilahibernate.dao;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import sakilahibernate.domain.Actor;
 import sakilahibernate.util.HibernateUtil;
@@ -17,7 +18,8 @@ public class ActorDAO {
     }
 
     public void createAndStoreActor(String firstName, String lastName) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    	SessionFactory sf = HibernateUtil.getSessionFactory();
+        Session session = sf.getCurrentSession();
         session.beginTransaction();
         Actor a = new Actor();
         a.setFirstName(firstName);
